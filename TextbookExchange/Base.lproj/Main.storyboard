@@ -907,7 +907,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Book Market" id="io4-pE-Hul">
-                        <barButtonItem key="rightBarButtonItem" style="plain" id="ozM-Dg-urL">
+                        <barButtonItem key="rightBarButtonItem" id="ozM-Dg-urL">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="tTc-xl-vjQ">
                                 <rect key="frame" x="233" y="5" width="71" height="33"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
