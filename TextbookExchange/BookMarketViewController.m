@@ -14,6 +14,7 @@
 @property NSArray* allBooks;
 - (IBAction)sorter:(UIButton *)sender;
 @property NSArray * searchResults;
+@property BOOL checker;
 
 @end
 
@@ -31,6 +32,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    self.checker = FALSE;
     // Do any additional setup after loading the view.
     self.allBooks = [[NSArray alloc] init];
     self.searchResults = [[NSArray alloc] init];
@@ -85,6 +87,7 @@
                              temp[@"title"]];
         
         cell.textLabel.text = tempStr;
+        self.checker = TRUE;
     }
     else{
         PFObject *temp =self.allBooks[indexPath.row] ;
@@ -92,6 +95,7 @@
                              temp[@"title"]];
         
         cell.textLabel.text = tempStr;
+        self.checker = FALSE;
     }
    
     return cell;
@@ -124,7 +128,7 @@
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-     if(self.searchResults == nil){
+     if(self.checker == TRUE){
          if ([[segue identifier] isEqualToString:@"showBookDetail"]) {
              [self.searchDisplayController setActive:NO animated:YES];
              NSIndexPath *indexPath = [self.searchDisplayController.searchResultsTableView indexPathForSelectedRow];
