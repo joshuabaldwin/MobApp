@@ -21,6 +21,7 @@
 		364CC0D519F47105008AB4D3 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 364CC0D419F47105008AB4D3 /* RegisterViewController.m */; };
 		364CC0D819F4774B008AB4D3 /* AccountInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 364CC0D719F4774B008AB4D3 /* AccountInfoViewController.m */; };
 		364CC0FB1A06F9CB008AB4D3 /* EditUserInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 364CC0FA1A06F9CB008AB4D3 /* EditUserInfoViewController.m */; };
+		364CC1011A0B27E3008AB4D3 /* ExHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 364CC1001A0B27E3008AB4D3 /* ExHistoryViewController.m */; };
 		36628FF61A0AAE9C002FDE0D /* BookMarketViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36628FF51A0AAE9C002FDE0D /* BookMarketViewController.m */; };
 		3668D93E1A08169A00228F6A /* MyBooksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3668D93D1A08169A00228F6A /* MyBooksViewController.m */; };
 		3668D9411A089D6A00228F6A /* AddBookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3668D9401A089D6A00228F6A /* AddBookViewController.m */; };
@@ -70,6 +71,8 @@
 		364CC0D719F4774B008AB4D3 /* AccountInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountInfoViewController.m; sourceTree = "<group>"; };
 		364CC0F91A06F9CB008AB4D3 /* EditUserInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditUserInfoViewController.h; sourceTree = "<group>"; };
 		364CC0FA1A06F9CB008AB4D3 /* EditUserInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditUserInfoViewController.m; sourceTree = "<group>"; };
+		364CC0FF1A0B27E3008AB4D3 /* ExHistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExHistoryViewController.h; sourceTree = "<group>"; };
+		364CC1001A0B27E3008AB4D3 /* ExHistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExHistoryViewController.m; sourceTree = "<group>"; };
 		36628FF41A0AAE9C002FDE0D /* BookMarketViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookMarketViewController.h; sourceTree = "<group>"; };
 		36628FF51A0AAE9C002FDE0D /* BookMarketViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookMarketViewController.m; sourceTree = "<group>"; };
 		3668D93C1A08169A00228F6A /* MyBooksViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyBooksViewController.h; sourceTree = "<group>"; };
@@ -183,6 +186,8 @@
 				367A19B419DD05CA006B876C /* AppDelegate.h */,
 				367A19B519DD05CA006B876C /* AppDelegate.m */,
 				367A19B719DD05CA006B876C /* Main.storyboard */,
+				364CC0FF1A0B27E3008AB4D3 /* ExHistoryViewController.h */,
+				364CC1001A0B27E3008AB4D3 /* ExHistoryViewController.m */,
 				36E033981A0B1D83003625FD /* EditBookViewController.h */,
 				36E033991A0B1D83003625FD /* EditBookViewController.m */,
 				36628FF41A0AAE9C002FDE0D /* BookMarketViewController.h */,
@@ -334,6 +339,7 @@
 			files = (
 				367A19BC19DD05CA006B876C /* ViewController.m in Sources */,
 				36E0339A1A0B1D83003625FD /* EditBookViewController.m in Sources */,
+				364CC1011A0B27E3008AB4D3 /* ExHistoryViewController.m in Sources */,
 				364CC0FB1A06F9CB008AB4D3 /* EditUserInfoViewController.m in Sources */,
 				3668D93E1A08169A00228F6A /* MyBooksViewController.m in Sources */,
 				367A19B619DD05CA006B876C /* AppDelegate.m in Sources */,

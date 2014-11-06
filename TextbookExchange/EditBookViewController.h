@@ -7,13 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <Parse/Parse.h>
 
 @interface EditBookViewController : UIViewController
-- (IBAction)savBookButt:(UIButton *)sender;
-- (IBAction)exchangedButt:(UIButton *)sender;
+@property (weak, nonatomic) IBOutlet UIButton *ExchangeButt;
 @property (weak, nonatomic) IBOutlet UITextField *titleLBL;
 @property (weak, nonatomic) IBOutlet UITextField *authorLBL;
 @property (weak, nonatomic) IBOutlet UITextField *isbnLBL;
-@property (strong, nonatomic) id sentBook;
+
 @end
