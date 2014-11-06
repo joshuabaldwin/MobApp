@@ -49,6 +49,7 @@
         self.allBooks = [NSArray arrayWithArray:temp];
         [self.bookMarketTable reloadData];
     }];
+   // [self.searchDisplayController setActive:NO animated:YES];
 }
 
 
@@ -67,16 +68,17 @@
     }
 }
 
--(UITableViewCell*) tableView:(UITableView *)bookMarketTable cellForRowAtIndexPath:(NSIndexPath *)indexPath
+-(UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
- //   UITableViewCell *cell = [bookMarketTable dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-    UITableViewCell *cell = [bookMarketTable dequeueReusableCellWithIdentifier:@"cell"];
+    
+   // UITableViewCell *cell = [self.bookMarketTable dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+     UITableViewCell *cell = [self.bookMarketTable dequeueReusableCellWithIdentifier:@"cell"];
     cell.textLabel.numberOfLines = 3;
     cell.textLabel.font = [UIFont systemFontOfSize:10];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
-    if(bookMarketTable == self.searchDisplayController.searchResultsTableView){
+    if(tableView == self.searchDisplayController.searchResultsTableView){
         PFObject *temp =self.searchResults[indexPath.row] ;
         NSString *tempStr = [NSString stringWithFormat:@"%@",
                              temp[@"title"]];
@@ -121,18 +123,24 @@
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([[segue identifier] isEqualToString:@"showBookDetail"]) {
-            NSIndexPath *indexPath = [self.bookMarketTable indexPathForSelectedRow];
-            PFObject *object = self.allBooks[indexPath.row];
-            [[segue destinationViewController] setDetailItem:object];
-    }
+     if(self.searchResults == nil){
+         if ([[segue identifier] isEqualToString:@"showBookDetail"]) {
+             [self.searchDisplayController setActive:NO animated:YES];
+             NSIndexPath *indexPath = [self.searchDisplayController.searchResultsTableView indexPathForSelectedRow];
+             PFObject *object = self.searchResults[indexPath.row];
+             [[segue destinationViewController] setDetailItem:object];
+         }
+     }
+     else{
+         if ([[segue identifier] isEqualToString:@"showBookDetail"]) {
+             [self.searchDisplayController setActive:NO animated:YES];
+             NSIndexPath *indexPath = [self.bookMarketTable indexPathForSelectedRow];
+             PFObject *object = self.allBooks[indexPath.row];
+             [[segue destinationViewController] setDetailItem:object];
+         }
+
+     }
 }
 
 
-- (IBAction)sortAtoZ:(id)sender {
-    NSSortDescriptor *valueDescriptor = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:YES selector:@selector(caseInsensitiveCompare:)];
-    NSArray *descriptors = [NSArray arrayWithObject:valueDescriptor];
-    self.allBooks = [self.allBooks sortedArrayUsingDescriptors:descriptors];
-    [self.bookMarketTable reloadData];
-}
 @end

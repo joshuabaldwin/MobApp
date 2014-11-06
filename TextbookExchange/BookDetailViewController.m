@@ -7,6 +7,7 @@
 //
 
 #import "BookDetailViewController.h"
+#import "EditBookViewController.h"
 
 @interface BookDetailViewController ()
 @property (weak, nonatomic) IBOutlet UIButton *editButt;
@@ -63,10 +64,12 @@
     }
 }
 
-- (void)viewDidLoad
+- (void)viewWillAppear:(BOOL)animated
 {
-    [super viewDidLoad];
+    [super viewWillAppear:animated];
 	// Do any additional setup after loading the view, typically from a nib.
+    
+    
     [self configureView];
 }
 
@@ -75,5 +78,15 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqualToString:@"editBook"]) {
+        PFObject *object = self.detailItem;
+        [[segue destinationViewController] setDetailItem:object];
+    }
+    
+}
+
 
 @end
