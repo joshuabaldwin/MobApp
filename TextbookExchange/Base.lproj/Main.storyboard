@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="GcV-cR-1Qc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5053" systemVersion="12F45" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="GcV-cR-1Qc">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -462,10 +462,10 @@
             </objects>
             <point key="canvasLocation" x="1391" y="21"/>
         </scene>
-        <!--View Controller - Exchange History-->
+        <!--Ex History View Controller - Exchange History-->
         <scene sceneID="2Uk-8i-UfB">
             <objects>
-                <viewController id="ewo-4K-EG9" sceneMemberID="viewController">
+                <viewController id="ewo-4K-EG9" customClass="ExHistoryViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="7xo-vQ-idh"/>
                         <viewControllerLayoutGuide type="bottom" id="qwJ-jJ-pTM"/>
@@ -479,7 +479,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="r1Y-EO-A21">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" id="r1Y-EO-A21">
                                         <rect key="frame" x="0.0" y="22" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="r1Y-EO-A21" id="MYZ-q0-vkp">
@@ -488,11 +488,18 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="ewo-4K-EG9" id="TRN-fk-27a"/>
+                                    <outlet property="delegate" destination="ewo-4K-EG9" id="Pw0-tM-Pb8"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Exchange History" id="YeZ-YJ-3Xt"/>
+                    <connections>
+                        <outlet property="exchangedBooks" destination="6fe-Kv-s65" id="61k-VD-ITb"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eXt-N0-3gJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -682,7 +689,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="WZj-qq-zBH" kind="push" identifier="editBook" id="mOf-4H-DBU"/>
+                                    <segue destination="WZj-qq-zBH" kind="push" id="mOf-4H-DBU"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -723,9 +730,6 @@
                                 <state key="normal" title="Click Here If Book Has Been Exchanged">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <connections>
-                                    <action selector="exchangedButt:" destination="WZj-qq-zBH" eventType="touchUpInside" id="vpz-Du-UeP"/>
-                                </connections>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Edit Book" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l7i-Uy-13q">
                                 <rect key="frame" x="123" y="66" width="75" height="21"/>
@@ -776,15 +780,13 @@
                                 <state key="normal" title="Save Changes">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <connections>
-                                    <action selector="savBookButt:" destination="WZj-qq-zBH" eventType="touchUpInside" id="wwf-a9-dbT"/>
-                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="thM-0N-Lwn"/>
                     <connections>
+                        <outlet property="ExchangeButt" destination="ex7-QG-BW0" id="IKT-Sd-eDI"/>
                         <outlet property="authorLBL" destination="mt6-d3-stu" id="XCL-cu-PHa"/>
                         <outlet property="isbnLBL" destination="JHy-Dq-YrQ" id="VCg-V1-eaa"/>
                         <outlet property="titleLBL" destination="FKI-rJ-xdd" id="Zba-Fk-WUc"/>
@@ -833,12 +835,14 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="My Books" id="vAO-cX-TGw">
-                        <barButtonItem key="rightBarButtonItem" id="bvH-En-3bk">
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="bvH-En-3bk">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="EDW-zs-Ey5">
                                 <rect key="frame" x="233" y="5" width="71" height="33"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
-                                <state key="normal" title="New"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <state key="normal" title="New">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
                                 <connections>
                                     <segue destination="4by-rM-8NP" kind="push" id="w6u-af-ziv"/>
                                 </connections>
@@ -899,7 +903,13 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Book Market" id="io4-pE-Hul"/>
+                    <navigationItem key="navigationItem" title="Book Market" id="io4-pE-Hul">
+                        <barButtonItem key="rightBarButtonItem" title="A-Z" id="36d-G4-QGZ">
+                            <connections>
+                                <action selector="sortAtoZ:" destination="JfH-fr-4su" id="EEa-L2-qBP"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <connections>
                         <outlet property="bookMarketTable" destination="ioE-qY-J1f" id="tIQ-Px-aAM"/>
@@ -945,8 +955,8 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="FEh-EA-FRI"/>
         <segue reference="kCf-0V-3iA"/>
-        <segue reference="fyi-TN-X2i"/>
+        <segue reference="FUT-J8-vh5"/>
+        <segue reference="Lso-dV-bg8"/>
     </inferredMetricsTieBreakers>
 </document>
