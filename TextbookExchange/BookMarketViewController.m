@@ -12,6 +12,7 @@
 
 @interface BookMarketViewController ()
 @property NSArray* allBooks;
+- (IBAction)sorter:(UIButton *)sender;
 @property NSArray * searchResults;
 
 @end
@@ -143,4 +144,13 @@
 }
 
 
+- (IBAction)sorter:(UIButton *)sender {
+    
+    NSSortDescriptor *valueDescriptor = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:YES selector:@selector(caseInsensitiveCompare:)];
+    NSArray *descriptors = [NSArray arrayWithObject:valueDescriptor];
+    self.allBooks = [self.allBooks sortedArrayUsingDescriptors:descriptors];
+    [self.bookMarketTable reloadData];
+
+
+}
 @end
