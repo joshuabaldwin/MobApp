@@ -22,8 +22,10 @@
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
+    self = [super initWithNibName:nibNameOrNil
+                           bundle:nibBundleOrNil];
+    if (self)
+    {
         // Custom initialization
     }
     return self;
@@ -39,20 +41,24 @@
     NSMutableArray * temp = [[NSMutableArray alloc] init];
     PFQuery *query = [PFQuery queryWithClassName:@"Books"];
     [query whereKey:@"exchanged" equalTo:@NO];
-    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        if(!error){
-            for (PFObject *object in objects) {
-                [temp addObject: object];
-            }
-        }
-        else{
-            NSLog(@"Error: %@ %@", error, [error userInfo]);
-        }
-        
-        self.allBooks = [NSArray arrayWithArray:temp];
-        [self.bookMarketTable reloadData];
-    }];
-   // [self.searchDisplayController setActive:NO animated:YES];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+     {
+         if(!error)
+         {
+             for (PFObject *object in objects)
+             {
+                 [temp addObject: object];
+             }
+         }
+         else
+         {
+             NSLog(@"Error: %@ %@", error, [error userInfo]);
+         }
+         
+         self.allBooks = [NSArray arrayWithArray:temp];
+         [self.bookMarketTable reloadData];
+     }];
+    // [self.searchDisplayController setActive:NO animated:YES];
 }
 
 
@@ -63,10 +69,12 @@
 
 -(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if(tableView == self.searchDisplayController.searchResultsTableView){
+    if(tableView == self.searchDisplayController.searchResultsTableView)
+    {
         return [self.searchResults count];
     }
-    else{
+    else
+    {
         return self.allBooks.count;
     }
 }
@@ -74,8 +82,8 @@
 -(UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-   // UITableViewCell *cell = [self.bookMarketTable dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-     UITableViewCell *cell = [self.bookMarketTable dequeueReusableCellWithIdentifier:@"cell"];
+    // UITableViewCell *cell = [self.bookMarketTable dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+    UITableViewCell *cell = [self.bookMarketTable dequeueReusableCellWithIdentifier:@"cell"];
     cell.textLabel.numberOfLines = 3;
     cell.textLabel.font = [UIFont systemFontOfSize:10];
     if (cell == nil) {
@@ -97,7 +105,7 @@
         cell.textLabel.text = tempStr;
         self.checker = FALSE;
     }
-   
+    
     return cell;
 }
 
@@ -113,7 +121,7 @@
 {
     [self filterContentForSearchText:searchString scope:[[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:[self.searchDisplayController.searchBar selectedScopeButtonIndex]]];
     return YES;
-    }
+}
 
 
 - (void)didReceiveMemoryWarning
@@ -123,28 +131,28 @@
 }
 
 /*
-#pragma mark - Navigation
-*/
+ #pragma mark - Navigation
+ */
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-     if(self.checker == TRUE){
-         if ([[segue identifier] isEqualToString:@"showBookDetail"]) {
-             [self.searchDisplayController setActive:NO animated:YES];
-             NSIndexPath *indexPath = [self.searchDisplayController.searchResultsTableView indexPathForSelectedRow];
-             PFObject *object = self.searchResults[indexPath.row];
-             [[segue destinationViewController] setDetailItem:object];
-         }
-     }
-     else{
-         if ([[segue identifier] isEqualToString:@"showBookDetail"]) {
-             [self.searchDisplayController setActive:NO animated:YES];
-             NSIndexPath *indexPath = [self.bookMarketTable indexPathForSelectedRow];
-             PFObject *object = self.allBooks[indexPath.row];
-             [[segue destinationViewController] setDetailItem:object];
-         }
-
-     }
+    if(self.checker == TRUE){
+        if ([[segue identifier] isEqualToString:@"showBookDetail"]) {
+            [self.searchDisplayController setActive:NO animated:YES];
+            NSIndexPath *indexPath = [self.searchDisplayController.searchResultsTableView indexPathForSelectedRow];
+            PFObject *object = self.searchResults[indexPath.row];
+            [[segue destinationViewController] setDetailItem:object];
+        }
+    }
+    else{
+        if ([[segue identifier] isEqualToString:@"showBookDetail"]) {
+            [self.searchDisplayController setActive:NO animated:YES];
+            NSIndexPath *indexPath = [self.bookMarketTable indexPathForSelectedRow];
+            PFObject *object = self.allBooks[indexPath.row];
+            [[segue destinationViewController] setDetailItem:object];
+        }
+        
+    }
 }
 
 
@@ -154,7 +162,7 @@
     NSArray *descriptors = [NSArray arrayWithObject:valueDescriptor];
     self.allBooks = [self.allBooks sortedArrayUsingDescriptors:descriptors];
     [self.bookMarketTable reloadData];
-
-
+    
+    
 }
 @end

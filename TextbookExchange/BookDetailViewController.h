@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
 
-@interface BookDetailViewController : UIViewController 
+@interface BookDetailViewController : UIViewController
+
 @property (weak, nonatomic) IBOutlet UILabel *titleL;
 @property (weak, nonatomic) IBOutlet UILabel *authorL;
 @property (weak, nonatomic) IBOutlet UILabel *isbnL;

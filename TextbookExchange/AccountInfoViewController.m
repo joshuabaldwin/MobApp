@@ -28,6 +28,14 @@
     return self;
 }
 
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
+    
+    self.view.userInteractionEnabled = true;
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
     //[super viewDidLoad];

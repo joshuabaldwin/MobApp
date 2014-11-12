@@ -27,6 +27,17 @@
     return self;
 }
 
+- (void) viewDidLoad
+{
+    self.view.userInteractionEnabled = true;
+    [super viewDidLoad];
+}
+
+//- (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+//{
+//    [[self view] endEditing:YES];
+//}
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -62,7 +73,6 @@
 
 -(NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
 {
-    
     return 1;
 }
 

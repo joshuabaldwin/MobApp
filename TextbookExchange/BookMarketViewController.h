@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface BookMarketViewController : UIViewController<UITableViewDataSource, UITableViewDelegate,UISearchDisplayDelegate>
+
 @property (weak, nonatomic) IBOutlet UITableView *bookMarketTable;
 
 @end

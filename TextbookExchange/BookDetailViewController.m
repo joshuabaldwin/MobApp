@@ -9,20 +9,39 @@
 #import "BookDetailViewController.h"
 #import "EditBookViewController.h"
 
+
+
 @interface BookDetailViewController ()
+
 @property (weak, nonatomic) IBOutlet UIButton *editButt;
 
 @property (weak, nonatomic) IBOutlet UITextView *emailTView;
+
 - (void)configureView;
+
 @end
+
+
 
 @implementation BookDetailViewController
 
 #pragma mark - Managing the detail item
 
+- (void) viewDidLoad
+{
+    self.view.userInteractionEnabled = true;
+    [super viewDidLoad];
+}
+
+- (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [[self view] endEditing:YES];
+}
+
 - (void)setDetailItem:(id)newDetailItem
 {
-    if (_detailItem != newDetailItem) {
+    if (_detailItem != newDetailItem)
+    {
         _detailItem = newDetailItem;
         
         // Update the view.
@@ -81,7 +100,8 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([[segue identifier] isEqualToString:@"editBook"]) {
+    if ([[segue identifier] isEqualToString:@"editBook"])
+    {
         PFObject *object = self.detailItem;
         [[segue destinationViewController] setDetailItem:object];
     }

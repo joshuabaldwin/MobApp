@@ -18,7 +18,8 @@
 
 - (void)setDetailItem:(id)newDetailItem
 {
-    if (_sentBook != newDetailItem) {
+    if (_sentBook != newDetailItem)
+    {
         _sentBook = newDetailItem;
         
         // Update the view.
