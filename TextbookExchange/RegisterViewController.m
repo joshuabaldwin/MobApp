@@ -37,16 +37,26 @@
 {
     [self.view endEditing:YES];
 }
-- (IBAction)registerUser:(id)sender {
+
+- (IBAction)registerUser:(id)sender
+{
     if ([_username.text length] != 0 && [_passcode.text length] != 0 && [_email.text length] != 0) {
         // Once user clicks on register
         PFUser *user = [PFUser user];
-        user.username = _username.text;
-        user.password = _passcode.text;
-        user[@"institute"] = _institute.text;
-        user[@"name"] = _name.text;
-        user.email = _email.text;
-        user[@"phone"] = _phone.text;
+        
+        NSLog(@"Username  = %@", self.username.text);
+        NSLog(@"Password  = %@", self.passcode.text);
+        NSLog(@"Institute = %@", self.institute.text);
+        NSLog(@"Name      = %@", self.name.text);
+        NSLog(@"Email     = %@", self.email.text);
+        NSLog(@"Phone     = %@", self.phone.text);
+        
+        user.username = self.username.text;
+        user.password = self.passcode.text;
+        user[@"institute"] = self.institute.text;
+        user[@"name"] = self.name.text;
+        user.email = self.email.text;
+        user[@"phone"] = self.phone.text;
         user[@"points"] = 0;
         
         // This call will asynchronously create a new user in Parse App.
@@ -55,16 +65,28 @@
             if (!error) {
                 // Hooray! Let them use the app now.
                 [self.navigationController popViewControllerAnimated:YES];
-            } else {
+            }
+            else
+            {
                 NSString *errorString = [error userInfo][@"error"];
                 // Show the errorString somewhere and let the user try again.
-                self.alert = [[UIAlertView alloc] initWithTitle:@"Invalid Register!" message:errorString delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                self.alert = [[UIAlertView alloc]
+                              initWithTitle:@"Invalid Register!"
+                              message:errorString
+                              delegate:self
+                              cancelButtonTitle:@"OK"
+                              otherButtonTitles:nil];
                 [self.alert show];
             }
         }];
     }
     else{
-        self.alert = [[UIAlertView alloc] initWithTitle:@"Invalid Register!" message:@"Username, passcode, and email address are required!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        self.alert = [[UIAlertView alloc]
+                      initWithTitle:@"Invalid Register!"
+                      message:@"Username, passcode, and email address are required!"
+                      delegate:self
+                      cancelButtonTitle:@"OK"
+                      otherButtonTitles:nil];
         [self.alert show];
     }
 }
@@ -76,14 +98,14 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+ {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

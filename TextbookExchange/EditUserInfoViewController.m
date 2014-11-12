@@ -22,10 +22,39 @@
     }
     return self;
 }
+
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [self.view endEditing:YES];
 }
+
+- (void) viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    self.locationManager = [[CLLocationManager alloc] init];
+    [self.locationManager requestWhenInUseAuthorization];
+    self.locationManager.delegate = self;
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    [self.locationManager startUpdatingLocation];
+}
+
+-(void) locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
+{
+    //self.latitudeLabel.text = [NSString stringWithFormat:@"%f", newLocation.coordinate.latitude];
+    //self.longitudeLabel.text = [NSString stringWithFormat:@"%f", newLocation.coordinate.longitude];
+    
+    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+    [geocoder reverseGeocodeLocation:newLocation completionHandler:^(NSArray *placemarks, NSError *error) {
+        if (placemarks && placemarks.count > 0)
+        {
+            CLPlacemark *placemark = placemarks[0];
+            self.addressLabel.text = [[placemark.addressDictionary objectForKey:@"FormattedAddressLines"] componentsJoinedByString:@"\n"];
+        }
+    }];
+}
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -55,19 +84,24 @@
     
     // Determine if each info's existence
     // Cannot give a property a name that begins with new or copy.
-    if ([_resetPasscode.text length] != 0) {
+    if ([_resetPasscode.text length] != 0)
+    {
         user.password = _resetPasscode.text;
     }
-    if ([_institute.text length] != 0) {
+    if ([_institute.text length] != 0)
+    {
         user[@"institute"] = _institute.text;
     }
-    if ([_name.text length] != 0) {
+    if ([_name.text length] != 0)
+    {
         user[@"name"] = _name.text;
     }
-    if ([_email.text length] != 0) {
+    if ([_email.text length] != 0)
+    {
         user.email = _email.text;
     }
-    if ([_phone.text length] != 0) {
+    if ([_phone.text length] != 0)
+    {
         user[@"phone"] = _phone.text;
     }
     
