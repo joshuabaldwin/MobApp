@@ -10,6 +10,7 @@
 #import <Parse/Parse.h>
 
 @interface ViewController : UIViewController
+
 @property (weak, nonatomic) IBOutlet UITextField *username;
 @property (weak, nonatomic) IBOutlet UITextField *passcode;
 - (IBAction)logIn:(id)sender;

@@ -34,6 +34,13 @@
     // Do any additional setup after loading the view.
     
     self.view.userInteractionEnabled = true;
+    
+    self.locationManager = [[CLLocationManager alloc] init];
+    [self.locationManager requestWhenInUseAuthorization];
+    self.locationManager.delegate = self;
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    [self.locationManager startUpdatingLocation];
+
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -74,6 +81,22 @@
     }];
      */
 }
+
+-(void) locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
+{
+    //self.latitudeLabel.text = [NSString stringWithFormat:@"%f", newLocation.coordinate.latitude];
+    //self.longitudeLabel.text = [NSString stringWithFormat:@"%f", newLocation.coordinate.longitude];
+    
+    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+    [geocoder reverseGeocodeLocation:newLocation completionHandler:^(NSArray *placemarks, NSError *error) {
+        if (placemarks && placemarks.count > 0)
+        {
+            CLPlacemark *placemark = placemarks[0];
+            self.addressLabel.text = [[placemark.addressDictionary objectForKey:@"FormattedAddressLines"] componentsJoinedByString:@"\n"];
+        }
+    }];
+}
+
 
 - (void)didReceiveMemoryWarning
 {

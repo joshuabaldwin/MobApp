@@ -61,6 +61,8 @@
 {
     [self.view endEditing:YES];
 }
+
+
 /*
 #pragma mark - Navigation
 */
@@ -90,7 +92,8 @@
     [alert show];
 }
 
-- (IBAction)exchangedButt:(UIButton *)sender {
+- (IBAction)exchangedButt:(UIButton *)sender
+{
     PFQuery *query = [PFQuery queryWithClassName:@"Books"];
     PFObject *temp = self.sentBook;
     // Retrieve the object by id

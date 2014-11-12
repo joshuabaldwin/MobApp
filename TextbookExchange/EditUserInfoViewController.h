@@ -12,7 +12,7 @@
 @import CoreLocation;
 
 @interface EditUserInfoViewController : UIViewController
-//@property NSString* username;
+
 - (IBAction)editInfo:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UITextField *resetPasscode;
@@ -21,7 +21,9 @@
 @property (weak, nonatomic) IBOutlet UITextField *email;
 @property (weak, nonatomic) IBOutlet UITextField *phone;
 
-@property (strong, nonatomic) IBOutlet UILabel *addressLabel;
+//@property (strong, nonatomic) IBOutlet UILabel *addressLabel;
+
+//@property (strong, nonatomic) IBOutlet UITextView *addressLabel;
 
 @property CLLocationManager *locationManager;
 

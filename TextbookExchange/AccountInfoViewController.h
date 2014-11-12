@@ -8,16 +8,21 @@
 
 #import <UIKit/UIKit.h>
 
+@import CoreLocation;
+
 @interface AccountInfoViewController : UIViewController
-@property (weak, nonatomic) IBOutlet UILabel *institute;
-@property (weak, nonatomic) IBOutlet UILabel *name;
-@property (weak, nonatomic) IBOutlet UILabel *email;
-@property (weak, nonatomic) IBOutlet UILabel *phone;
-@property (weak, nonatomic) IBOutlet UILabel *points;
-@property (weak, nonatomic) IBOutlet UILabel *welcome;
+
+@property (strong, nonatomic) IBOutlet UILabel *institute;
+@property (strong, nonatomic) IBOutlet UILabel *name;
+@property (strong, nonatomic) IBOutlet UILabel *email;
+@property (strong, nonatomic) IBOutlet UILabel *phone;
+@property (strong, nonatomic) IBOutlet UILabel *points;
+@property (strong, nonatomic) IBOutlet UILabel *welcome;
 
 - (IBAction)logOut:(id)sender;
 
-//@property NSString* username;
+@property (strong, nonatomic) IBOutlet UILabel *addressLabel;
+
+@property CLLocationManager *locationManager;
 
 @end
