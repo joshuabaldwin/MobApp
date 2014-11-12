@@ -11,11 +11,12 @@
 
 @interface BookDetailViewController : UIViewController
 
-@property (weak, nonatomic) IBOutlet UILabel *titleL;
-@property (weak, nonatomic) IBOutlet UILabel *authorL;
-@property (weak, nonatomic) IBOutlet UILabel *isbnL;
-@property (weak, nonatomic) IBOutlet UILabel *ownerL;
-@property (weak, nonatomic) IBOutlet UILabel *tpL;
+@property (strong, nonatomic) IBOutlet UILabel *titleL;
+@property (strong, nonatomic) IBOutlet UILabel *authorL;
+@property (strong, nonatomic) IBOutlet UILabel *isbnL;
+@property (strong, nonatomic) IBOutlet UILabel *ownerL;
+@property (strong, nonatomic) IBOutlet UILabel *tpL;
+@property (strong, nonatomic) IBOutlet UILabel *emailLabel;
 
 @property (strong, nonatomic) id detailItem;
 @end

@@ -57,13 +57,16 @@
 
 - (IBAction)logIn:(id)sender {
     [PFUser logInWithUsernameInBackground:_username.text password:_passcode.text block:^(PFUser *user, NSError *error) {
-        if (user) {
+        if (user)
+        {
             // Do stuff after successful login.
             //AccountInfoViewController *viewController = [[AccountInfoViewController alloc] init];
             
             //[self.navigationController pushViewController:viewController animated:YES];
             [self performSegueWithIdentifier:@"AccountInfo" sender:self];
-        } else {
+        }
+        else
+        {
             // The login failed. Check error to see why.
             self.alert = [[UIAlertView alloc] initWithTitle:@"Invalid Log-in!" message:@"Incorrect username or passcode." delegate:self cancelButtonTitle:@"Back" otherButtonTitles:nil];
             [self.alert show];

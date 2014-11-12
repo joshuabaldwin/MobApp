@@ -73,10 +73,12 @@
         self.emailTView.dataDetectorTypes = UIDataDetectorTypeAll;
         
         PFUser *currentUser = [PFUser currentUser];
-        if([self.detailItem[@"ownerID"] isEqualToString:currentUser.username]){
+        if([self.detailItem[@"ownerID"] isEqualToString:currentUser.username])
+        {
             self.editButt.hidden = NO;
         }
-        else{
+        else
+        {
             self.editButt.hidden = YES;
         }
       
