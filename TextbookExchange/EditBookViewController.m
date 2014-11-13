@@ -10,11 +10,23 @@
 #import "BookDetailViewController.h"
 
 @interface EditBookViewController ()
+@property (strong, nonatomic) IBOutlet UISwitch *exchangedToggleSwitch;
 
 @end
 
 @implementation EditBookViewController
 
+- (IBAction)exchangedToggleSwitchFlipped:(id)sender
+{
+    if (self.exchangedToggleSwitch.on == YES)
+    {
+        NSLog(@"Toggle Switch ON");
+    }
+    if (self.exchangedToggleSwitch.on == NO)
+    {
+        NSLog(@"Toggle Switch OFF");
+    }
+}
 
 - (void)setDetailItem:(id)newDetailItem
 {
@@ -39,7 +51,7 @@
 {
     [super viewDidLoad];
     
-
+    
     // Do any additional setup after loading the view.
     [self configureView];
 }
@@ -64,35 +76,44 @@
 
 
 /*
-#pragma mark - Navigation
-*/
+ #pragma mark - Navigation
+ */
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 
 
 
-- (IBAction)savBookButt:(UIButton *)sender {
-    PFQuery *query = [PFQuery queryWithClassName:@"Books"];
-    PFObject *temp = self.sentBook;
-    // Retrieve the object by id
-    [query getObjectInBackgroundWithId: temp.objectId block:^(PFObject *book, NSError *error) {
-        
-        // Now let's update it with some new data. In this case, only cheatMode and score
-        // will get sent to the cloud. playerName hasn't changed.
-        book[@"author"] = self.authorLBL.text;
-        book[@"ISBN"] = self.isbnLBL.text;
-        book[@"title"] = self.titleLBL.text;
-        [book saveInBackground];
-        self.sentBook = book;
-    }];
-    UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"Book Saved!"
-                                                   message: @" "
-                                                  delegate: self
-                                         cancelButtonTitle:@"Okay"
-                                         otherButtonTitles:nil];
-    [alert show];
+- (IBAction)savBookButt:(UIButton *)sender
+{
+    if (self.exchangedToggleSwitch.on == YES)
+    {
+        [self bookWasExchanged];
+    }
+    else
+    {
+        PFQuery *query = [PFQuery queryWithClassName:@"Books"];
+        PFObject *temp = self.sentBook;
+        // Retrieve the object by id
+        [query getObjectInBackgroundWithId: temp.objectId block:^(PFObject *book, NSError *error)
+         {
+             // Now let's update it with some new data. In this case, only cheatMode and score
+             // will get sent to the cloud. playerName hasn't changed.
+             book[@"author"] = self.authorLBL.text;
+             book[@"ISBN"] = self.isbnLBL.text;
+             book[@"title"] = self.titleLBL.text;
+             [book saveInBackground];
+             self.sentBook = book;
+         }];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"Book Saved!"
+                                                       message: @" "
+                                                      delegate: self
+                                             cancelButtonTitle:@"Okay"
+                                             otherButtonTitles:nil];
+        [alert show];
+    }
 }
 
-- (IBAction)exchangedButt:(UIButton *)sender
+
+- (void) bookWasExchanged
 {
     PFQuery *query = [PFQuery queryWithClassName:@"Books"];
     PFObject *temp = self.sentBook;
@@ -107,4 +128,12 @@
     }];
     [self.navigationController popViewControllerAnimated:YES];
 }
+
+
+- (IBAction)exchangedButt:(UIButton *)sender
+{
+    [self bookWasExchanged];
+}
+
+
 @end

@@ -16,15 +16,16 @@
 
 - (IBAction)editInfo:(id)sender;
 
-@property (weak, nonatomic) IBOutlet UITextField *resetPasscode;
-@property (weak, nonatomic) IBOutlet UITextField *institute;
-@property (weak, nonatomic) IBOutlet UITextField *name;
-@property (weak, nonatomic) IBOutlet UITextField *email;
-@property (weak, nonatomic) IBOutlet UITextField *phone;
-
-//@property (strong, nonatomic) IBOutlet UILabel *addressLabel;
-
-//@property (strong, nonatomic) IBOutlet UITextView *addressLabel;
+@property (strong, nonatomic) IBOutlet UITextField *resetPasscode;
+@property (strong, nonatomic) IBOutlet UITextField *institute;
+@property (strong, nonatomic) IBOutlet UITextField *name;
+@property (strong, nonatomic) IBOutlet UITextField *email;
+@property (strong, nonatomic) IBOutlet UITextField *phone;
+@property (strong, nonatomic) IBOutlet UITextField *addressTextField;
+@property (strong, nonatomic) IBOutlet UITextField *cityTextField;
+@property (strong, nonatomic) IBOutlet UITextField *stateTextField;
+@property (strong, nonatomic) IBOutlet UITextField *zipcodeTextField;
+@property (strong, nonatomic) IBOutlet UITextField *countryTextField;
 
 @property CLLocationManager *locationManager;
 

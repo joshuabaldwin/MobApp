@@ -32,33 +32,42 @@
 {
     [super viewDidAppear:animated];
     
-    self.locationManager = [[CLLocationManager alloc] init];
-    [self.locationManager requestWhenInUseAuthorization];
-    self.locationManager.delegate = self;
-    self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-    [self.locationManager startUpdatingLocation];
+    //    self.locationManager = [[CLLocationManager alloc] init];
+    //    [self.locationManager requestWhenInUseAuthorization];
+    //    self.locationManager.delegate = self;
+    //    self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    //    [self.locationManager startUpdatingLocation];
 }
 
--(void) locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
-{
-    //self.latitudeLabel.text = [NSString stringWithFormat:@"%f", newLocation.coordinate.latitude];
-    //self.longitudeLabel.text = [NSString stringWithFormat:@"%f", newLocation.coordinate.longitude];
-    
-    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
-    [geocoder reverseGeocodeLocation:newLocation completionHandler:^(NSArray *placemarks, NSError *error) {
-        if (placemarks && placemarks.count > 0)
-        {
-            CLPlacemark *placemark = placemarks[0];
-            //self.addressLabel.text = [[placemark.addressDictionary objectForKey:@"FormattedAddressLines"] componentsJoinedByString:@"\n"];
-        }
-    }];
-}
+//-(void) locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
+//{
+//    //self.latitudeLabel.text = [NSString stringWithFormat:@"%f", newLocation.coordinate.latitude];
+//    //self.longitudeLabel.text = [NSString stringWithFormat:@"%f", newLocation.coordinate.longitude];
+//
+//    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+//    [geocoder reverseGeocodeLocation:newLocation completionHandler:^(NSArray *placemarks, NSError *error) {
+//        if (placemarks && placemarks.count > 0)
+//        {
+//            CLPlacemark *placemark = placemarks[0];
+//            //self.addressLabel.text = [[placemark.addressDictionary objectForKey:@"FormattedAddressLines"] componentsJoinedByString:@"\n"];
+//        }
+//    }];
+//}
 
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     // Do any additional setup after loading the view.
+    
+    // Pull data NSUserDefaults
+    NSUserDefaults *prefs = [[NSUserDefaults alloc] init];
+    self.addressTextField.text = [prefs objectForKey:addressStorageKey];
+    self.cityTextField.text = [prefs objectForKey:cityStorageKey];
+    self.stateTextField.text = [prefs objectForKey:stateStorageKey];
+    self.zipcodeTextField.text = [prefs objectForKey:zipcodeStorageKey];
+    self.countryTextField.text = [prefs objectForKey:countryStorageKey];
     
     self.view.userInteractionEnabled = true;
 }
@@ -70,17 +79,18 @@
 }
 
 /*
-#pragma mark - Navigation
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+ {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+- (IBAction)editInfo:(id)sender
 {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
-- (IBAction)editInfo:(id)sender {
     // Authorize the current user to modify the user info
     PFUser *user = [PFUser currentUser];
     
@@ -105,6 +115,32 @@
     if ([_phone.text length] != 0)
     {
         user[@"phone"] = _phone.text;
+    }
+    
+    NSUserDefaults *prefs = [[NSUserDefaults alloc] init];
+    if (self.addressTextField.text.length > 0)
+    {
+        [prefs setObject:self.addressTextField.text forKey:addressStorageKey];
+    }
+    
+    if (self.cityTextField.text.length > 0)
+    {
+        [prefs setObject:self.cityTextField.text forKey:cityStorageKey];
+    }
+    
+    if (self.stateTextField.text.length > 0)
+    {
+        [prefs setObject:self.stateTextField.text forKey:stateStorageKey];
+    }
+    
+    if (self.zipcodeTextField.text.length > 0)
+    {
+        [prefs setObject:self.zipcodeTextField.text forKey:zipcodeStorageKey];
+    }
+    
+    if (self.countryTextField.text.length > 0)
+    {
+        [prefs setObject:self.countryTextField.text forKey:countryStorageKey];
     }
     
     // Finish editing and go back the Account Info view

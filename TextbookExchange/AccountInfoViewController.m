@@ -31,23 +31,25 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     // Do any additional setup after loading the view.
     
+    NSLog(@"AccountInfoViewController: viewDidLoad");
+    
     self.view.userInteractionEnabled = true;
-    
-    self.locationManager = [[CLLocationManager alloc] init];
-    [self.locationManager requestWhenInUseAuthorization];
-    self.locationManager.delegate = self;
-    self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-    [self.locationManager startUpdatingLocation];
-    
 }
+
 
 - (void)viewWillAppear:(BOOL)animated
 {
     //[super viewDidLoad];
     [super viewWillAppear:animated];
+    
     // Do any additional setup after loading the view.
+    
+    NSLog(@"AccountInfoViewController: viewWillAppear");
+    
+    // Pick up the user Singleton value
     PFUser *user = [PFUser currentUser];
     
     self.welcome.text = [NSString stringWithFormat:@"Welcome, %@!", user.username];
@@ -57,6 +59,12 @@
     self.name.text = user[@"name"];
     self.email.text = user[@"email"];
     self.points.text = [NSString stringWithFormat:@"%@", user[@"points"]];
+    
+    self.locationManager = [[CLLocationManager alloc] init];
+    [self.locationManager requestWhenInUseAuthorization];
+    self.locationManager.delegate = self;
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    [self.locationManager startUpdatingLocation];
     
     /*
      //query the parse using username
@@ -84,55 +92,109 @@
 
 -(void) locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
-    //self.latitudeLabel.text = [NSString stringWithFormat:@"%f", newLocation.coordinate.latitude];
-    //self.longitudeLabel.text = [NSString stringWithFormat:@"%f", newLocation.coordinate.longitude];
+//    NSLog(@"Latitude  = %@", [NSString stringWithFormat:@"%f", newLocation.coordinate.latitude]);
+//    NSLog(@"Longitude = %@", [NSString stringWithFormat:@"%f", newLocation.coordinate.longitude]);
     
     CLGeocoder *geocoder = [[CLGeocoder alloc] init];
-    [geocoder reverseGeocodeLocation:newLocation completionHandler:^(NSArray *placemarks, NSError *error) {
-        if (placemarks && placemarks.count > 0)
-        {
-            CLPlacemark *placemark = placemarks[0];
-            self.addressLabel.text = [[placemark.addressDictionary objectForKey:@"FormattedAddressLines"] componentsJoinedByString:@"\n"];
-            
-            // Store text of the label into NSUserDefault fullAddressStorageKey
-            NSUserDefaults *prefs = [[NSUserDefaults alloc] init];
-            [prefs setObject:self.addressLabel.text forKey:fullAddressStorageKey];
-        }
-    }];
+    [geocoder reverseGeocodeLocation:newLocation completionHandler:^(NSArray *placemarks, NSError *error)
+     {
+         if (placemarks && placemarks.count > 0)
+         {
+             CLPlacemark *placemark = placemarks[0];
+             self.addressLabel.text = [[placemark.addressDictionary objectForKey:@"FormattedAddressLines"] componentsJoinedByString:@"\n"];
+             
+             // Store text of the label into NSUserDefault fullAddressStorageKey
+             NSUserDefaults *prefs = [[NSUserDefaults alloc] init];
+             [prefs setObject:self.addressLabel.text forKey:fullAddressStorageKey];
+         }
+     }];
     
     // Parse the address
     // Step 1: Split string value stored in fullAddressStorageKey into array of three strings splitting on /n character
     // Print the array into the log
     // Array[1] should be the address
     // Array[2] will need to be split on , and space to separate into city, state, and zipcode
-    
     NSUserDefaults *prefs = [[NSUserDefaults alloc] init];
     
     NSString *address = self.addressLabel.text;
-    NSArray *array1 = [address componentsSeparatedByCharactersInSet:
-                       [NSCharacterSet characterSetWithCharactersInString:@"\n"]];//[address componentsSeparatedByString:@"\n"];
+    NSMutableArray *array1 = [[address componentsSeparatedByCharactersInSet:
+                               [NSCharacterSet characterSetWithCharactersInString:@"\n"]] mutableCopy];
     
-    for(int i = 0; i < array1.count; i++)
+    [array1 removeObject:@""];
+    
+    if (![array1[0] isEqualToString:@"Label"])
     {
-        NSLog(@"array[%i] = %@", i, array1[i]);
+        //        for(int i = 0; i < array1.count; i++)
+        //        {
+        //            NSLog(@"array1[%i] = %@", i, array1[i]);
+        //        }
+        
+        // Split apart the city, state and zip
+        NSMutableArray *array2 = [[array1[1] componentsSeparatedByCharactersInSet:
+                                   [NSCharacterSet characterSetWithCharactersInString:@",\n"]] mutableCopy];
+        
+        [array2 removeObject:@""];
+        
+        //        for(int i = 0; i < array2.count; i++)
+        //        {
+        //            NSLog(@"array2[%i] = %@", i, array2[i]);
+        //        }
+        
+        
+        NSMutableArray *array3 = [[array2[1] componentsSeparatedByCharactersInSet:
+                                   [NSCharacterSet characterSetWithCharactersInString:@" -\n"]] mutableCopy];
+        
+        [array3 removeObject:@""];
+        
+        //        for(int i = 0; i < array3.count; i++)
+        //        {
+        //            NSLog(@"array3[%i] = %@", i, array3[i]);
+        //        }
+        
+        // Log the street address
+        //NSLog(@"Street Address = %@", array1[0]);
+        NSString *tempStr = [prefs objectForKey:addressStorageKey];
+        if (tempStr == nil && tempStr.length <= 0)
+        {
+            [prefs setObject:array1[0] forKey:addressStorageKey];
+        }
+        
+        // Log the city
+        //NSLog(@"City = %@", array2[0]);
+        tempStr = [prefs objectForKey:cityStorageKey];
+        if (tempStr == nil && tempStr.length <= 0)
+        {
+            [prefs setObject:array2[0] forKey:cityStorageKey];
+        }
+        
+        // Log the state
+        //NSLog(@"State = %@", array3[0]);
+        tempStr = [prefs objectForKey:stateStorageKey];
+        if (tempStr == nil && tempStr.length <= 0)
+        {
+            [prefs setObject:array3[0] forKey:stateStorageKey];
+        }
+        
+        // Log the country
+        //NSLog(@"Country = %@", array1[2]);
+        tempStr = [prefs objectForKey:countryStorageKey];
+        if (tempStr == nil && tempStr.length <= 0)
+        {
+            [prefs setObject:array1[2] forKey:countryStorageKey];
+        }
+        
+        // Log the zipcode
+        //NSLog(@"Zipcode = %@", array3[1]);
+        tempStr = [prefs objectForKey:zipcodeStorageKey];
+        if (tempStr == nil && tempStr.length <= 0)
+        {
+            [prefs setObject:array3[1] forKey:zipcodeStorageKey];
+        }
     }
-    
-    // Log the street address
-    
-    
-    // Split apart the city, state and zip
-    //NSArray *array2 = [whicheverIsCorrectStringFromArray1 componentsSeparatedByCharactersInSet:
-    //                   [NSCharacterSet characterSetWithCharactersInString:@", -\n"]];//[address componentsSeparatedByString:@"\n"];
-    
-    // Log the city
-    
-    
-    // Log the state
-    
-    
-    // Log the zipcode
-    
-    
+    else
+    {
+        NSLog(@"Location data not yet found");
+    }
 }
 
 

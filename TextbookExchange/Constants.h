@@ -15,5 +15,6 @@ extern NSString *const addressStorageKey;
 extern NSString *const cityStorageKey;
 extern NSString *const stateStorageKey;
 extern NSString *const zipcodeStorageKey;
+extern NSString *const countryStorageKey;
 
 @end
