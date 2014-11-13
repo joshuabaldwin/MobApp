@@ -40,7 +40,7 @@
     self.locationManager.delegate = self;
     self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     [self.locationManager startUpdatingLocation];
-
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -59,26 +59,26 @@
     self.points.text = [NSString stringWithFormat:@"%@", user[@"points"]];
     
     /*
-    //query the parse using username
-    PFQuery *query = [PFQuery queryWithClassName:@"User"];
-    [query whereKey:@"username" equalTo:self.username];
-    */
+     //query the parse using username
+     PFQuery *query = [PFQuery queryWithClassName:@"User"];
+     [query whereKey:@"username" equalTo:self.username];
+     */
     /*
-    // Query the parse using username
-    PFQuery *query = [PFUser query];
-    [query whereKey:@"username" equalTo:self.username];
-    
-    // Access the table "User" from parse.com
-    [query findObjectsInBackgroundWithBlock:^(NSArray *users, NSError *error) {
-        
-        PFObject *user = [users objectAtIndex:0];
-        
-        // Display account infomation here
-        self.institute.text = user[@"institute"];
-        self.phone.text = user[@"phone"];
-        self.name.text = user[@"name"];
-        self.email.text = user[@"email"];
-    }];
+     // Query the parse using username
+     PFQuery *query = [PFUser query];
+     [query whereKey:@"username" equalTo:self.username];
+     
+     // Access the table "User" from parse.com
+     [query findObjectsInBackgroundWithBlock:^(NSArray *users, NSError *error) {
+     
+     PFObject *user = [users objectAtIndex:0];
+     
+     // Display account infomation here
+     self.institute.text = user[@"institute"];
+     self.phone.text = user[@"phone"];
+     self.name.text = user[@"name"];
+     self.email.text = user[@"email"];
+     }];
      */
 }
 
@@ -106,7 +106,31 @@
     // Array[1] should be the address
     // Array[2] will need to be split on , and space to separate into city, state, and zipcode
     
+    NSUserDefaults *prefs = [[NSUserDefaults alloc] init];
     
+    NSString *address = self.addressLabel.text;
+    NSArray *array1 = [address componentsSeparatedByCharactersInSet:
+                       [NSCharacterSet characterSetWithCharactersInString:@"\n"]];//[address componentsSeparatedByString:@"\n"];
+    
+    for(int i = 0; i < array1.count; i++)
+    {
+        NSLog(@"array[%i] = %@", i, array1[i]);
+    }
+    
+    // Log the street address
+    
+    
+    // Split apart the city, state and zip
+    //NSArray *array2 = [whicheverIsCorrectStringFromArray1 componentsSeparatedByCharactersInSet:
+    //                   [NSCharacterSet characterSetWithCharactersInString:@", -\n"]];//[address componentsSeparatedByString:@"\n"];
+    
+    // Log the city
+    
+    
+    // Log the state
+    
+    
+    // Log the zipcode
     
     
 }
@@ -119,15 +143,15 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+ {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 - (IBAction)logOut:(id)sender {
     [PFUser logOut];

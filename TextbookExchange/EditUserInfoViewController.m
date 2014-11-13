@@ -49,7 +49,7 @@
         if (placemarks && placemarks.count > 0)
         {
             CLPlacemark *placemark = placemarks[0];
-            self.addressLabel.text = [[placemark.addressDictionary objectForKey:@"FormattedAddressLines"] componentsJoinedByString:@"\n"];
+            //self.addressLabel.text = [[placemark.addressDictionary objectForKey:@"FormattedAddressLines"] componentsJoinedByString:@"\n"];
         }
     }];
 }
