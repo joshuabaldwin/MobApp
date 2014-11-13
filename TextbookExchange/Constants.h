@@ -10,4 +10,10 @@
 
 @interface Constants : NSObject
 
+extern NSString *const fullAddressStorageKey;
+extern NSString *const addressStorageKey;
+extern NSString *const cityStorageKey;
+extern NSString *const stateStorageKey;
+extern NSString *const zipcodeStorageKey;
+
 @end

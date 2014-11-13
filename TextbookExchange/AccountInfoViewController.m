@@ -93,8 +93,22 @@
         {
             CLPlacemark *placemark = placemarks[0];
             self.addressLabel.text = [[placemark.addressDictionary objectForKey:@"FormattedAddressLines"] componentsJoinedByString:@"\n"];
+            
+            // Store text of the label into NSUserDefault fullAddressStorageKey
+            NSUserDefaults *prefs = [[NSUserDefaults alloc] init];
+            [prefs setObject:self.addressLabel.text forKey:fullAddressStorageKey];
         }
     }];
+    
+    // Parse the address
+    // Step 1: Split string value stored in fullAddressStorageKey into array of three strings splitting on /n character
+    // Print the array into the log
+    // Array[1] should be the address
+    // Array[2] will need to be split on , and space to separate into city, state, and zipcode
+    
+    
+    
+    
 }
 
 
